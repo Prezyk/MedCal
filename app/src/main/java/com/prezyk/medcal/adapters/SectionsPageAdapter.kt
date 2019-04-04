@@ -1,4 +1,4 @@
-package com.example.medcal.adapters
+package com.prezyk.medcal.adapters
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager

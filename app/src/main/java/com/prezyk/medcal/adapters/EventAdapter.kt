@@ -1,4 +1,4 @@
-package com.example.medcal.adapters
+package com.prezyk.medcal.adapters
 
 import android.content.Context
 import android.util.Log
@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import com.example.medcal.R
-import com.example.medcal.model.Event
+import com.prezyk.medcal.R
+import com.prezyk.medcal.model.Event
 
 
 class EventAdapter(context: Context,
@@ -17,7 +17,7 @@ class EventAdapter(context: Context,
     private val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val rowView = inflater.inflate(R.layout.view_events_listview_item, parent, false)
+        val rowView = inflater.inflate(R.layout.display_events_listview_item, parent, false)
 
         var textHour = rowView.findViewById(R.id.textViewHour) as TextView
         textHour.text = dataSource[position].getHourMins()

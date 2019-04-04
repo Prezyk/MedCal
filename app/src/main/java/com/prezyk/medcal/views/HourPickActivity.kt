@@ -1,13 +1,12 @@
-package com.example.medcal.activities
+package com.prezyk.medcal.views
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.widget.CheckBox
 import android.widget.ListView
 import android.widget.RelativeLayout
-import com.example.medcal.adapters.HoursAdapter
-import com.example.medcal.R
+import com.prezyk.medcal.adapters.HoursAdapter
+import com.prezyk.medcal.R
 import kotlinx.android.synthetic.main.add_event_pick_hours.*
 import java.util.*
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.medcal">
+    package="com.prezyk.medcal">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -15,7 +15,7 @@
             android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-                android:name=".activities.MainActivity"
+                android:name="com.prezyk.medcal.views.MainActivity"
                 android:label="@string/app_name"
                 android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -24,10 +24,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activities.ViewEventsActivity"/>
-        <activity android:name=".activities.HourPickActivity"/>
-        <activity android:name=".activities.SummonDroneActivity"/>
-        <activity android:name=".activities.AddEventActivity"/>
+        <activity android:name="com.prezyk.medcal.views.DisplayEventsActivity"/>
+        <activity android:name="com.prezyk.medcal.views.HourPickActivity"/>
+        <activity android:name="com.prezyk.medcal.views.SummonDroneActivity"/>
+        <activity android:name="com.prezyk.medcal.views.AddEventActivity"/>
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.example.medcal.adapters
+package com.prezyk.medcal.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import android.widget.BaseAdapter
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import com.example.medcal.R
+import com.prezyk.medcal.R
 
 class DrugAdapter(context: Context,
     private var dataSource: ArrayList<String>): BaseAdapter() {
