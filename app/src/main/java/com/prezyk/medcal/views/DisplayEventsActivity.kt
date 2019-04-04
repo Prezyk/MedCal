@@ -3,15 +3,22 @@ package com.prezyk.medcal.views
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.prezyk.medcal.adapters.EventAdapter
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import com.prezyk.medcal.R
+import com.prezyk.medcal.adapters.RecyclerEventsAdapter
 import kotlinx.android.synthetic.main.display_events_layout.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 import com.prezyk.medcal.model.Event
+import com.prezyk.medcal.presenters.DisplayEventsPresenter
 
-class DisplayEventsActivity : AppCompatActivity() {
+class DisplayEventsActivity : AppCompatActivity(), DisplayEventsPresenter.View {
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var viewAdapter: RecyclerView.Adapter<*>
+    private lateinit var viewManager: RecyclerView.LayoutManager
 
 
 
@@ -30,6 +37,15 @@ class DisplayEventsActivity : AppCompatActivity() {
 
         var eventList = getEventList()
 
+        viewManager = LinearLayoutManager(this)
+        viewAdapter = RecyclerEventsAdapter(eventList)
+
+        recyclerView = findViewById<RecyclerView>(R.id.eventsRecyclerView).apply {
+            setHasFixedSize(true)
+            layoutManager = viewManager
+            adapter = viewAdapter
+        }
+
 
 
 //        eventsDate.setOnClickListener {
@@ -44,15 +60,10 @@ class DisplayEventsActivity : AppCompatActivity() {
 
 
 
-        var eventsAdapter = EventAdapter(this, eventList)
 
-        eventsListView.adapter = eventsAdapter
-
-//        var imageView = findViewById<ImageView>(R.id.deleteEvent)
-//        imageView.setOnClickListener {
-//            eventsAdapter.removeItem(imageView.tag as Int)
-//            eventsAdapter.notifyDataSetChanged()
-//        }
+//        var eventsAdapter = EventAdapter(this, eventList)
+//
+//        eventsRecyclerView.adapter = eventsAdapter
 
     }
 
