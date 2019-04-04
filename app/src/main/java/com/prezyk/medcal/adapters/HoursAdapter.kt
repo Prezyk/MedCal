@@ -1,4 +1,4 @@
-package com.example.medcal.adapters
+package com.prezyk.medcal.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.CheckBox
-import com.example.medcal.R
+import com.prezyk.medcal.R
 import java.text.SimpleDateFormat
 import java.util.*
 

@@ -1,23 +1,23 @@
-package com.example.medcal.activities
+package com.prezyk.medcal.views
 
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.example.medcal.adapters.EventAdapter
-import com.example.medcal.R
-import kotlinx.android.synthetic.main.view_events_layout.*
+import com.prezyk.medcal.adapters.EventAdapter
+import com.prezyk.medcal.R
+import kotlinx.android.synthetic.main.display_events_layout.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-import com.example.medcal.model.Event
+import com.prezyk.medcal.model.Event
 
-class ViewEventsActivity : AppCompatActivity() {
+class DisplayEventsActivity : AppCompatActivity() {
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.view_events_layout)
+        setContentView(R.layout.display_events_layout)
 
 
 

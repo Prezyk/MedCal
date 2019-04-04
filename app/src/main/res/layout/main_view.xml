@@ -14,14 +14,14 @@
         android:layout_marginBottom="24dp"
         android:dateTextAppearance="@android:style/TextAppearance.Large"
         android:weekDayTextAppearance="@android:style/TextAppearance.Large"
-        app:layout_constraintBottom_toTopOf="@+id/btnViewEvents"
+        app:layout_constraintBottom_toTopOf="@+id/btnDisplayEvents"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btnViewEvents"
+        android:id="@+id/btnDisplayEvents"
         android:layout_width="235dp"
         android:layout_height="71dp"
         android:layout_marginStart="8dp"
@@ -52,6 +52,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnViewEvents"
+        app:layout_constraintTop_toBottomOf="@+id/btnDisplayEvents"
         app:layout_constraintVertical_bias="0.311" />
 </android.support.constraint.ConstraintLayout>

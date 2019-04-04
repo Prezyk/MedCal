@@ -1,11 +1,11 @@
-package com.example.medcal.activities
+package com.prezyk.medcal.views
 
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.example.medcal.adapters.DrugAdapter
-import com.example.medcal.R
+import com.prezyk.medcal.adapters.DrugAdapter
+import com.prezyk.medcal.R
 import kotlinx.android.synthetic.main.add_event_layout.*
 import java.text.SimpleDateFormat
 import java.util.*

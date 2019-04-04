@@ -1,4 +1,4 @@
-package com.example.medcal.activities
+package com.prezyk.medcal.views
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -7,8 +7,8 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.example.medcal.R
-import com.example.medcal.adapters.LocationAdapter
+import com.prezyk.medcal.R
+import com.prezyk.medcal.adapters.LocationAdapter
 import kotlinx.android.synthetic.main.summon_drone_layout.*
 
 class SummonDroneActivity : AppCompatActivity() {

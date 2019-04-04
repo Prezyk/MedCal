@@ -1,4 +1,4 @@
-package com.example.medcal
+package com.prezyk.medcal
 
 import org.junit.Test
 

@@ -1,4 +1,4 @@
-package com.example.medcal.model
+package com.prezyk.medcal.model
 
 import java.text.SimpleDateFormat
 import java.util.*
