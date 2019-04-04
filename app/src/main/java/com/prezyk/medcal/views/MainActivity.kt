@@ -3,6 +3,7 @@ package com.prezyk.medcal.views
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.widget.RecyclerView
 import android.util.Log
 import com.prezyk.medcal.R
 import com.prezyk.medcal.presenters.MainPresenter
@@ -10,7 +11,7 @@ import kotlinx.android.synthetic.main.main_view.*
 import java.util.*
 
 
-class MainActivity() : AppCompatActivity(), MainPresenter.View {
+class MainActivity : AppCompatActivity(), MainPresenter.View {
 
     private val presenter = MainPresenter(this)
 
@@ -31,6 +32,7 @@ class MainActivity() : AppCompatActivity(), MainPresenter.View {
         btnAddEvents.setOnClickListener {
             presenter.onButtonAddEventClick()
         }
+
 
 
     }
