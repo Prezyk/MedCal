@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/addEventLayoutTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/title_add_event"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/eventStartDateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="DD/MM/YYYY"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintEnd_toEndOf="@+id/addEventLayoutTitle"
+            app:layout_constraintStart_toStartOf="@+id/addEventLayoutTitle"
+            app:layout_constraintTop_toBottomOf="@+id/addEventLayoutTitle" />
+
+        <TextView
+            android:id="@+id/eventEndDateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="DD/MM/YYYY"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintEnd_toEndOf="@+id/eventStartDateText"
+            app:layout_constraintStart_toStartOf="@+id/eventStartDateText"
+            app:layout_constraintTop_toBottomOf="@+id/eventStartDateText" />
+
+        <Button
+            android:id="@+id/accteptBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/btn_add_event"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <RadioGroup
+            android:id="@+id/periodicOptionsRadGrp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@+id/eventEndDateText"
+            app:layout_constraintStart_toStartOf="@+id/eventEndDateText"
+            app:layout_constraintTop_toBottomOf="@+id/eventEndDateText">
+
+            <RadioButton
+                android:id="@+id/onceRadBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:text="@string/once_radio_option" />
+
+            <RadioButton
+                android:id="@+id/everydayRadBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:text="@string/everyday_radio_option" />
+
+            <RadioButton
+                android:id="@+id/weeklyRadBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:text="@string/weekly_radio_option" />
+
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/selectHoursBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/select_hours_btn"
+            app:layout_constraintEnd_toEndOf="@+id/periodicOptionsRadGrp"
+            app:layout_constraintStart_toStartOf="@+id/periodicOptionsRadGrp"
+            app:layout_constraintTop_toBottomOf="@+id/periodicOptionsRadGrp" />
+
+        <ListView
+            android:id="@+id/drugListView"
+            android:layout_width="260dp"
+            android:layout_height="300dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintStart_toStartOf="@+id/selectHoursBtn"
+            app:layout_constraintEnd_toEndOf="@id/selectHoursBtn"
+            app:layout_constraintBottom_toTopOf="@id/accteptBtn"
+            app:layout_constraintTop_toBottomOf="@+id/selectHoursBtn" />
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>
