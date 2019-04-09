@@ -19,8 +19,12 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class AddEventActivity : AppCompatActivity() {
-    //TODO add drug listview and configure all that shit...
-
+    //TODO ograniczenia na daty (data końcowa nie może być mniejsza niż początkowa)
+    //TODO textfield/lista na zaznaczone godziny
+    //TODO odnawianie zaznaczenia po ponownym włączeniu HourPickActivity
+    //TODO wpieprzanie wszystkiego do bazy danych - tu będzie jazda
+    //TODO kiedy radio na jednorazowe to data końcowa jest nieklikalna
+    //TODO w HourPickActivity przycisk nie ma tekstu, a tytuł jest mały i może tego recyclera jakoś do środka wyrównać
     companion object {
         val NONE = -1
         val ONCE = 0
@@ -64,7 +68,6 @@ class AddEventActivity : AppCompatActivity() {
 
 
 
-        //TODO activity for picking hour, geting result date from started activity ("sending data to invoking activity"?)
         selectHoursBtn.setOnClickListener {
             var sHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
             var sMin = Calendar.getInstance().get(Calendar.MINUTE)
