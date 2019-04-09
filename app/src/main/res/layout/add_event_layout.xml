@@ -105,8 +105,8 @@
             app:layout_constraintStart_toStartOf="@+id/periodicOptionsRadGrp"
             app:layout_constraintTop_toBottomOf="@+id/periodicOptionsRadGrp" />
 
-        <ListView
-            android:id="@+id/drugListView"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/drugRecyclerView"
             android:layout_width="260dp"
             android:layout_height="300dp"
             android:layout_marginStart="8dp"
