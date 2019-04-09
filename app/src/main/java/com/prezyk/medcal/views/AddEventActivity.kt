@@ -2,13 +2,21 @@ package com.prezyk.medcal.views
 
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.opengl.Visibility
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.util.Log
+import android.view.View
 import com.prezyk.medcal.adapters.DrugAdapter
 import com.prezyk.medcal.R
+import com.prezyk.medcal.adapters.RecycleDrugAdapter
+import com.prezyk.medcal.adapters.RecyclerEventsAdapter
 import kotlinx.android.synthetic.main.add_event_layout.*
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class AddEventActivity : AppCompatActivity() {
     //TODO add drug listview and configure all that shit...
@@ -32,6 +40,11 @@ class AddEventActivity : AppCompatActivity() {
     private var periodic: Int = NONE
 
 
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var viewAdapter: RecyclerView.Adapter<*>
+    private lateinit var viewManager: RecyclerView.LayoutManager
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -53,6 +66,11 @@ class AddEventActivity : AppCompatActivity() {
 
         //TODO activity for picking hour, geting result date from started activity ("sending data to invoking activity"?)
         selectHoursBtn.setOnClickListener {
+            var sHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+            var sMin = Calendar.getInstance().get(Calendar.MINUTE)
+
+
+
 
             val intent = Intent(this, HourPickActivity::class.java).apply {
                 putExtra("dateMillis", selectedStartDate.timeInMillis)
@@ -91,7 +109,7 @@ class AddEventActivity : AppCompatActivity() {
 
             var datePickerDialog = DatePickerDialog(this ,DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
                 selectedEndDate.set(year, month, dayOfMonth)
-                eventStartDateText.text = format.format(selectedEndDate.time)
+                eventEndDateText.text = format.format(selectedEndDate.time)
 
             }, sYear, sMonth, sDay)
 
@@ -99,11 +117,20 @@ class AddEventActivity : AppCompatActivity() {
 
         }
 
+
+        //TODO ehh...
         var list = ArrayList<String>()
         list.add("")
 
-        var drugAdapter = DrugAdapter(this, list)
-        drugListView.adapter = drugAdapter
+        viewManager = LinearLayoutManager(this)
+        viewAdapter = RecycleDrugAdapter(list)
+
+
+        recyclerView = findViewById<RecyclerView>(R.id.drugRecyclerView).apply {
+            setHasFixedSize(true)
+            layoutManager = viewManager
+            adapter = viewAdapter
+        }
 
 
     }
@@ -113,24 +140,32 @@ class AddEventActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode==0) {
 
-            var millisHour = ArrayList<Long>()
+            var hoursList = data?.extras?.getSerializable(HourPickActivity.PICKED_HOURS) as ArrayList<Calendar>
 
-            for(s: String in intent.extras.keySet()) {
-                if(s.subSequence(0, 10)=="pickedHour") {
-                    millisHour.add(intent.extras.get(s) as Long)
-                }
+            var format = SimpleDateFormat("HH:mm")
+
+            for(c: Calendar in hoursList) {
+                Log.e("NO ERROR", format.format(c.time).toString())
             }
 
-            millisHour.sort()
-
-            selectedHours = arrayOfNulls<Calendar>(millisHour.size)
-
-
-            for(i in 1 until selectedHours.size) {
-                selectedHours[i] = Calendar.getInstance()
-                selectedHours[i]!!.timeInMillis = millisHour[i]
-                //TODO check what fuckin' !! means after variable name
-            }
+//            var millisHour = ArrayList<Long>()
+//
+//            for(s: String in intent.extras.keySet()) {
+//                if(s.subSequence(0, 10)=="pickedHour") {
+//                    millisHour.add(intent.extras.get(s) as Long)
+//                }
+//            }
+//
+//            millisHour.sort()
+//
+//            selectedHours = arrayOfNulls<Calendar>(millisHour.size)
+//
+//
+//            for(i in 1 until selectedHours.size) {
+//                selectedHours[i] = Calendar.getInstance()
+//                selectedHours[i]!!.timeInMillis = millisHour[i]
+//                //TODO check what fuckin' !! means after variable name
+//            }
 
 
         }
