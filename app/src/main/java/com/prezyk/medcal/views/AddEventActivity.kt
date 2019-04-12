@@ -121,7 +121,6 @@ class AddEventActivity : AppCompatActivity() {
         }
 
 
-        //TODO ehh...
         var list = ArrayList<String>()
         list.add("")
 
