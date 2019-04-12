@@ -18,7 +18,7 @@ class HourPickPresenter(view: View) {
 
 
     fun onButtonSubmitClick() : ArrayList<Calendar> {
-        var selectedHoursList = arrayListOf<Calendar>()
+         var selectedHoursList = arrayListOf<Calendar>()
         for(i in 0 until getHoursArray().size) {
             if(hours[i].selected) { selectedHoursList.add(getHoursArray()[i].date) }
         }
