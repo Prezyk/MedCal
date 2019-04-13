@@ -35,9 +35,9 @@ class DisplayEventsPresenter(view: View) {
         var medList2 = arrayListOf("Wit C", "Wit B12", "Magnesium", "Paracetamol")
         var medList3 = arrayListOf("Wit C", "Wit D", "Ketonal", "Iron")
 
-        var event1 = Event(date1, medList1, false)
-        var event2 = Event(date2, medList2, false)
-        var event3 = Event(date3, medList3, false)
+        var event1 = Event(date1, medList1, Event.NONE)
+        var event2 = Event(date2, medList2, Event.NONE)
+        var event3 = Event(date3, medList3, Event.NONE)
 
 
         return arrayOf(event1, event2, event3).toCollection(ArrayList())

@@ -13,40 +13,29 @@ import com.prezyk.medcal.adapters.DrugAdapter
 import com.prezyk.medcal.R
 import com.prezyk.medcal.adapters.RecycleDrugAdapter
 import com.prezyk.medcal.adapters.RecyclerEventsAdapter
+import com.prezyk.medcal.presenters.AddEventPresenter
 import kotlinx.android.synthetic.main.add_event_layout.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class AddEventActivity : AppCompatActivity() {
+class AddEventActivity : AppCompatActivity(), AddEventPresenter.View {
     //TODO ograniczenia na daty (data końcowa nie może być mniejsza niż początkowa)
     //TODO textfield/lista na zaznaczone godziny
     //TODO odnawianie zaznaczenia po ponownym włączeniu HourPickActivity
     //TODO wpieprzanie wszystkiego do bazy danych - tu będzie jazda
     //TODO kiedy radio na jednorazowe to data końcowa jest nieklikalna
     //TODO w HourPickActivity przycisk nie ma tekstu, a tytuł jest mały i może tego recyclera jakoś do środka wyrównać
-    companion object {
-        val NONE = -1
-        val ONCE = 0
-        val WEEKLY = 1
-        val EVERYDAY = 2
-    }
 
-    val NONE = -1
-    val ONCE = 0
-    val WEEKLY = 1
-    val EVERYDAY = 2
 
-    private lateinit var selectedStartDate: Calendar
-    private lateinit var selectedEndDate: Calendar
-    private lateinit var selectedHours: Array<Calendar?>
-    private lateinit var drugList: Array<String>
-    private var periodic: Int = NONE
+
 
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
+
+    private lateinit var presenter: AddEventPresenter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,78 +43,33 @@ class AddEventActivity : AppCompatActivity() {
 
         setContentView(R.layout.add_event_layout)
 
-        selectedStartDate = Calendar.getInstance()
-        selectedEndDate = Calendar.getInstance()
+        this.presenter = AddEventPresenter(this)
 
-        selectedStartDate.timeInMillis = intent.extras.getLong("dateMillis")
-        selectedEndDate.timeInMillis = intent.extras.getLong("dateMillis")
-
-        val format = SimpleDateFormat("dd/MM/yyyy" )
-
-
-        eventStartDateText.text = format.format(this.selectedStartDate.time)
-        eventEndDateText.text = format.format(this.selectedEndDate.time)
-
+        presenter.setSelectedDate(intent.extras.getLong("dateMillis"))
 
 
         selectHoursBtn.setOnClickListener {
-            var sHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
-            var sMin = Calendar.getInstance().get(Calendar.MINUTE)
-
-
-
-
-            val intent = Intent(this, HourPickActivity::class.java).apply {
-                putExtra("dateMillis", selectedStartDate.timeInMillis)
-            }
-            startActivityForResult(intent, 0)
-
-
+            presenter.onSubmitButtonClick()
         }
 
-        everydayRadBtn.id = this.EVERYDAY
-        onceRadBtn.id = this.ONCE
-        weeklyRadBtn.id = this.WEEKLY
+        everydayRadBtn.id = presenter.NONE
+        onceRadBtn.id = presenter.ONCE
+        weeklyRadBtn.id = presenter.WEEKLY
 
-        periodicOptionsRadGrp.setOnCheckedChangeListener { _, checkedId -> this.periodic=checkedId }
+        periodicOptionsRadGrp.setOnCheckedChangeListener { _, checkedId -> presenter.updatePeriodicSelection(checkedId) }
 
-        eventStartDateText.setOnClickListener {
-            var sDay = selectedStartDate.get(Calendar.DAY_OF_MONTH)
-            var sMonth = selectedStartDate.get(Calendar.MONTH)
-            var sYear = selectedStartDate.get(Calendar.YEAR)
-
-            var datePickerDialog = DatePickerDialog(this ,DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-                selectedStartDate.set(year, month, dayOfMonth)
-                eventStartDateText.text = format.format(selectedStartDate.time)
-
-            }, sYear, sMonth, sDay)
-
-            datePickerDialog.show()
-
+        eventStartDateText.setOnClickListener() {
+            presenter.onStartDateTextViewClick()
         }
 
 
         eventEndDateText.setOnClickListener {
-            var sDay = selectedEndDate.get(Calendar.DAY_OF_MONTH)
-            var sMonth = selectedEndDate.get(Calendar.MONTH)
-            var sYear = selectedEndDate.get(Calendar.YEAR)
-
-            var datePickerDialog = DatePickerDialog(this ,DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-                selectedEndDate.set(year, month, dayOfMonth)
-                eventEndDateText.text = format.format(selectedEndDate.time)
-
-            }, sYear, sMonth, sDay)
-
-            datePickerDialog.show()
-
+            presenter.onEndDateTextViewClick()
         }
 
 
-        var list = ArrayList<String>()
-        list.add("")
-
         viewManager = LinearLayoutManager(this)
-        viewAdapter = RecycleDrugAdapter(list)
+        viewAdapter = RecycleDrugAdapter(presenter.drugList)
 
 
         recyclerView = findViewById<RecyclerView>(R.id.drugRecyclerView).apply {
@@ -137,39 +81,57 @@ class AddEventActivity : AppCompatActivity() {
 
     }
 
+    override fun setStartDateTextView(text: String) {
+        eventStartDateText.text = text
+    }
+
+    override fun setEndDateTextView(text: String) {
+        eventEndDateText.text = text
+    }
+
+    override fun navigateToPickHours(date: Long) {
+        val intent = Intent(this, HourPickActivity::class.java).apply {
+            putExtra("dateMillis", date)
+        }
+        startActivityForResult(intent, 0)
+    }
+
+    override fun showStartDatePicker(sYear: Int, sMonth: Int, sDay: Int) {
+        var datePickerDialog = DatePickerDialog(this ,
+            DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+                presenter.updateSelectedStartDate(year, month, dayOfMonth)
+
+            }, sYear, sMonth, sDay)
+
+        datePickerDialog.show()
+    }
+
+    override fun showEndDatePicker(sYear: Int, sMonth: Int, sDay: Int) {
+        var datePickerDialog = DatePickerDialog(this,
+            DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+                presenter.updateSelectedEndDate(year, month, dayOfMonth)
+
+            }, sYear, sMonth, sDay
+        )
+
+        datePickerDialog.show()
+    }
+
+    override fun submit() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode==0) {
 
             var hoursList = data?.extras?.getSerializable(HourPickActivity.PICKED_HOURS) as ArrayList<Calendar>
-
+            presenter.updateHoursPicked(hoursList)
             var format = SimpleDateFormat("HH:mm")
 
             for(c: Calendar in hoursList) {
                 Log.e("NO ERROR", format.format(c.time).toString())
             }
-
-//            var millisHour = ArrayList<Long>()
-//
-//            for(s: String in intent.extras.keySet()) {
-//                if(s.subSequence(0, 10)=="pickedHour") {
-//                    millisHour.add(intent.extras.get(s) as Long)
-//                }
-//            }
-//
-//            millisHour.sort()
-//
-//            selectedHours = arrayOfNulls<Calendar>(millisHour.size)
-//
-//
-//            for(i in 1 until selectedHours.size) {
-//                selectedHours[i] = Calendar.getInstance()
-//                selectedHours[i]!!.timeInMillis = millisHour[i]
-//                //TODO check what fuckin' !! means after variable name
-//            }
-
-
         }
     }
 }
