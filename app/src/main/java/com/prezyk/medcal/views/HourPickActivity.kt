@@ -5,15 +5,12 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.widget.CheckBox
-import android.widget.ListView
-import android.widget.RelativeLayout
-import com.prezyk.medcal.adapters.HoursAdapter
 import com.prezyk.medcal.R
 import com.prezyk.medcal.adapters.RecyclerHoursAdapter
 import com.prezyk.medcal.presenters.HourPickPresenter
 import kotlinx.android.synthetic.main.add_event_pick_hours.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 class HourPickActivity : AppCompatActivity(), HourPickPresenter.View {
 
@@ -35,6 +32,7 @@ class HourPickActivity : AppCompatActivity(), HourPickPresenter.View {
         var tempDate = Calendar.getInstance()
         tempDate.timeInMillis = intent.extras.getLong("dateMillis")
         presenter.updateSelectedDate(tempDate)
+        presenter.updateSelectedHours(intent.extras.getSerializable(PICKED_HOURS) as ArrayList<Calendar>)
 
 
         var viewManager = LinearLayoutManager(this)
