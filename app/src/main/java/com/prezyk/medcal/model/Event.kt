@@ -5,36 +5,43 @@ import java.util.*
 
 class Event {
 
-    private lateinit var date: Calendar
-    var medList: ArrayList<String>
-    var isCyclic: Boolean = false
-
-    constructor(date: Calendar, medList: ArrayList<String>, isCyclic: Boolean) {
-        this.date = date
-        this.medList = medList
-        this.isCyclic = isCyclic
+    companion object {
+        val NONE = -1
+        val ONCE = 0
+        val WEEKLY = 1
+        val EVERYDAY = 2
     }
 
-    constructor(date: Date, medList: ArrayList<String>, isCyclic: Boolean) {
+    private lateinit var date: Calendar
+    var medList: ArrayList<String>
+    var periodic = NONE
+
+    constructor(date: Calendar, medList: ArrayList<String>, periodic: Int) {
+        this.date = date
+        this.medList = medList
+        this.periodic = periodic
+    }
+
+    constructor(date: Date, medList: ArrayList<String>, periodic: Int) {
         this.date = Calendar.getInstance()
         this.date.time = date
         this.medList = medList
-        this.isCyclic = isCyclic
+        this.periodic = periodic
     }
 
-    constructor(date: String, medList: ArrayList<String>, isCyclic: Boolean) {
+    constructor(date: String, medList: ArrayList<String>, periodic: Int) {
         var format = SimpleDateFormat("dd.MM.YYYY")
         this.date = Calendar.getInstance()
         this.date.time = format.parse(date)
         this.medList = medList
-        this.isCyclic = isCyclic
+        this.periodic = periodic
     }
 
-    constructor(year: Int, month: Int, day: Int, hour: Int, minutes: Int, medList: ArrayList<String>, isCyclic: Boolean) {
+    constructor(year: Int, month: Int, day: Int, hour: Int, minutes: Int, medList: ArrayList<String>, periodic: Int) {
         this.date = Calendar.getInstance()
         this.date.set(year, month, day, hour, minutes, 0)
         this.medList = medList
-        this.isCyclic = isCyclic
+        this.periodic = periodic
     }
 
 
