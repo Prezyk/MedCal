@@ -18,6 +18,7 @@ class LocationAdapter(context: Context, private val dataSource : Array<String>) 
         var rowView = inflater.inflate(R.layout.location_dropdown, parent, false)
         var locationNameTextView = rowView.findViewById<TextView>(R.id.locationNameTextView)
         locationNameTextView.text = dataSource[position]
+
         return rowView
     }
 

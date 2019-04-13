@@ -20,12 +20,6 @@ class AddEventPresenter(view: View) {
     var selectedHours = ArrayList<Calendar>()
     var drugList = arrayListOf("")
 
-//    companion object {
-//        val NONE = -1
-//        val ONCE = 0
-//        val WEEKLY = 1
-//        val EVERYDAY = 2
-//    }
 
 
 
@@ -41,21 +35,37 @@ class AddEventPresenter(view: View) {
 
     fun updateSelectedStartDate(dateMillis: Long) {
         this.selectedStartDate.timeInMillis = dateMillis
+        if(this.selectedStartDate.timeInMillis>this.selectedEndDate.timeInMillis) {
+            this.selectedEndDate.timeInMillis = dateMillis
+            view.setEndDateTextView(format.format(this.selectedEndDate.time))
+        }
         view.setStartDateTextView(format.format(this.selectedStartDate.time))
     }
 
     fun updateSelectedStartDate(year: Int, month: Int, day: Int) {
         this.selectedStartDate.set(year, month, day)
+        if(this.selectedStartDate.timeInMillis>this.selectedEndDate.timeInMillis) {
+            this.selectedEndDate.set(year, month, day)
+            view.setEndDateTextView(format.format(this.selectedEndDate.time))
+        }
         view.setStartDateTextView(format.format(this.selectedStartDate.time))
     }
 
     fun updateSelectedEndDate(year: Int, month: Int, day: Int) {
         this.selectedEndDate.set(year, month, day)
+        if(this.selectedEndDate.timeInMillis < this.selectedStartDate.timeInMillis) {
+            this.selectedStartDate.set(year, month, day)
+            view.setStartDateTextView(format.format(this.selectedStartDate.time))
+        }
         view.setEndDateTextView(format.format(this.selectedEndDate.time))
     }
 
     fun updateSelectedEndDate(dateMillis: Long) {
         this.selectedEndDate.timeInMillis = dateMillis
+        if(this.selectedEndDate.timeInMillis < this.selectedStartDate.timeInMillis) {
+            this.selectedStartDate.timeInMillis = dateMillis
+            view.setStartDateTextView(format.format(this.selectedStartDate.time))
+        }
         view.setEndDateTextView(format.format(this.selectedEndDate.time))
     }
 
@@ -78,6 +88,13 @@ class AddEventPresenter(view: View) {
     fun onSubmitButtonClick() {}
 
     fun updatePeriodicSelection(id: Int) {
+
+        if(this.periodic!=id && id==ONCE) {
+            view.hideEndDateTextView()
+        } else if(this.periodic!=id && id!=ONCE) {
+            view.showEndDateTextView()
+        }
+
         this.periodic = when (id) {
             ONCE -> ONCE
             WEEKLY -> WEEKLY
@@ -88,6 +105,12 @@ class AddEventPresenter(view: View) {
 
     fun updateHoursPicked(hoursList: ArrayList<Calendar>) {
         this.selectedHours = hoursList
+        var timeFormat = SimpleDateFormat("HH:mm")
+        var pickedHoursStringList = ArrayList<String>()
+        for (c: Calendar in hoursList) {
+            pickedHoursStringList.add(timeFormat.format(c.time))
+        }
+        view.updatePickedHoursTextView(pickedHoursStringList)
     }
 
     public interface View {
@@ -95,7 +118,10 @@ class AddEventPresenter(view: View) {
         fun setEndDateTextView(text: String)
         fun showStartDatePicker(year: Int, month: Int, day: Int)
         fun showEndDatePicker(year: Int, month: Int, day: Int)
+        fun updatePickedHoursTextView(pickedHours: ArrayList<String>)
         fun navigateToPickHours(date: Long)
+        fun hideEndDateTextView()
+        fun showEndDateTextView()
         fun submit()
     }
 }

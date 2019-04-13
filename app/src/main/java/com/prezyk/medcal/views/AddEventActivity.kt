@@ -49,16 +49,16 @@ class AddEventActivity : AppCompatActivity(), AddEventPresenter.View {
 
 
         selectHoursBtn.setOnClickListener {
-            presenter.onSubmitButtonClick()
+            presenter.onPickHoursButtonClick()
         }
 
-        everydayRadBtn.id = presenter.NONE
+        everydayRadBtn.id = presenter.EVERYDAY
         onceRadBtn.id = presenter.ONCE
         weeklyRadBtn.id = presenter.WEEKLY
 
         periodicOptionsRadGrp.setOnCheckedChangeListener { _, checkedId -> presenter.updatePeriodicSelection(checkedId) }
 
-        eventStartDateText.setOnClickListener() {
+        eventStartDateText.setOnClickListener {
             presenter.onStartDateTextViewClick()
         }
 
@@ -92,6 +92,7 @@ class AddEventActivity : AppCompatActivity(), AddEventPresenter.View {
     override fun navigateToPickHours(date: Long) {
         val intent = Intent(this, HourPickActivity::class.java).apply {
             putExtra("dateMillis", date)
+            putExtra(HourPickActivity.PICKED_HOURS, presenter.selectedHours)
         }
         startActivityForResult(intent, 0)
     }
@@ -102,6 +103,7 @@ class AddEventActivity : AppCompatActivity(), AddEventPresenter.View {
                 presenter.updateSelectedStartDate(year, month, dayOfMonth)
 
             }, sYear, sMonth, sDay)
+        datePickerDialog.datePicker.minDate = Calendar.getInstance().timeInMillis
 
         datePickerDialog.show()
     }
@@ -113,12 +115,27 @@ class AddEventActivity : AppCompatActivity(), AddEventPresenter.View {
 
             }, sYear, sMonth, sDay
         )
+        datePickerDialog.datePicker.minDate = presenter.selectedStartDate.timeInMillis
 
         datePickerDialog.show()
     }
 
     override fun submit() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun updatePickedHoursTextView(pickedHours: ArrayList<String>) {
+        pickedHoursTextView.text = pickedHours.joinToString("\n")
+    }
+
+    override fun hideEndDateTextView() {
+        endDateLabelTextView.visibility = View.INVISIBLE
+        eventEndDateText.visibility = View.INVISIBLE
+    }
+
+    override fun showEndDateTextView() {
+        endDateLabelTextView.visibility = View.VISIBLE
+        eventEndDateText.visibility = View.VISIBLE
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -16,6 +16,18 @@ class HourPickPresenter(view: View) {
         this.hours = setHoursArray()
     }
 
+    fun updateSelectedHours(pickedHours: ArrayList<Calendar>) {
+
+        for(c: Calendar in pickedHours) {
+            var tempRecyclerHour = RecyclerHourModel(c)
+            for(i in 0 until this.hours.size) {
+                if(tempRecyclerHour.equals(this.hours[i])) {
+                    this.hours[i].selected = true
+                }
+            }
+        }
+    }
+
 
     fun onButtonSubmitClick() : ArrayList<Calendar> {
          var selectedHoursList = arrayListOf<Calendar>()

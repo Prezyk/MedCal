@@ -22,8 +22,10 @@
     <string name="weekly_radio_option">Co tydzień</string>
 
     <string name="hours_pick_title">Wybierz godziny</string>
-
+    <string name="add_drug_list_title">Wpisz leki</string>
     <string name="select_hours_btn">Wybierz godziny</string>
+    <string name="start_date_selection_label">Data początkowa</string>
+    <string name="end_date_selection_label">Data końcowa</string>
 
     <string-array name="event_list">
         <item>
