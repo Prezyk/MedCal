@@ -24,7 +24,7 @@
         android:layout_below="@id/summonDroneImg"
         android:background="#686868" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/eventsRecyclerView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

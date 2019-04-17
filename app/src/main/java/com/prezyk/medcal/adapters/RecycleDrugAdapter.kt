@@ -1,6 +1,5 @@
 package com.prezyk.medcal.adapters
 
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.prezyk.medcal.R
 
 class RecycleDrugAdapter(private val drugs: ArrayList<String>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -21,10 +21,10 @@ class RecycleDrugAdapter(private val drugs: ArrayList<String>): RecyclerView.Ada
         val row: View
         if(viewType==DRUG_ROW) {
             row = LayoutInflater.from(parent?.context).inflate(R.layout.add_event_listview_item, parent, false)
-            return RecycleDrugAdapter.DrugTextHolder(row)
+            return DrugTextHolder(row)
         } else {
             row = LayoutInflater.from(parent?.context).inflate(R.layout.add_event_listview_item2, parent, false)
-            return RecycleDrugAdapter.DrugTextFieldHolder(row)
+            return DrugTextFieldHolder(row)
         }
 
     }
@@ -38,7 +38,7 @@ class RecycleDrugAdapter(private val drugs: ArrayList<String>): RecyclerView.Ada
         Log.e("TAG", "STARTING")
 
         if(getItemViewType(position)==DRUG_ROW) {
-            holder as RecycleDrugAdapter.DrugTextHolder
+            holder as DrugTextHolder
             holder.textViewDrug?.text = drugs[position]
             holder.imageViewDelete?.setOnClickListener {
                 drugs.removeAt(position)
@@ -46,7 +46,7 @@ class RecycleDrugAdapter(private val drugs: ArrayList<String>): RecyclerView.Ada
             }
 
         } else if (getItemViewType(position)==TEXT_FIELD_ROW) {
-            holder as RecycleDrugAdapter.DrugTextFieldHolder
+            holder as DrugTextFieldHolder
             holder.imageViewAdd?.setOnClickListener {
                 drugs.add(holder.textFieldDrug?.text.toString())
                 holder.textFieldDrug?.setText("")

@@ -7,7 +7,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -117,7 +117,7 @@
             app:layout_constraintStart_toStartOf="@+id/endDateLabelTextView"
             app:layout_constraintTop_toBottomOf="@+id/periodicOptionsRadGrp" />
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/drugRecyclerView"
             android:layout_width="260dp"
             android:layout_height="wrap_content"
@@ -161,5 +161,5 @@
             app:layout_constraintStart_toEndOf="@+id/selectHoursBtn"
             app:layout_constraintTop_toTopOf="@+id/selectHoursBtn" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

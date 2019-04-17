@@ -1,10 +1,10 @@
 package com.prezyk.medcal.adapters
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import androidx.recyclerview.widget.RecyclerView
 import com.prezyk.medcal.R
 import com.prezyk.medcal.model.RecyclerHourModel
 import java.text.SimpleDateFormat
