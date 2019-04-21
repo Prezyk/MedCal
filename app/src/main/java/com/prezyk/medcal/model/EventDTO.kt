@@ -1,20 +1,53 @@
 package com.prezyk.medcal.model
 
+import com.prezyk.medcal.model.model.Drug
+import com.prezyk.medcal.model.model.Event
+import com.prezyk.medcal.model.model.TimeRange
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
-class Event {
+class EventDTO {
 
     companion object {
         val NONE = -1
         val ONCE = 0
         val WEEKLY = 1
         val EVERYDAY = 2
+
+        fun buildEventDTOList(drugList: List<Drug>, eventList: List<Event>): List<EventDTO?> {
+
+            var eventDTOList = arrayOfNulls<EventDTO>(eventList.size)
+            for(i in 0 until eventDTOList.size) {
+                var time = Calendar.getInstance()
+                time.timeInMillis = eventList[i].time
+                eventDTOList[i] = EventDTO(time, drugList as ArrayList<String>)
+            }
+
+            return eventDTOList.asList()
+        }
+
+
     }
 
-    private lateinit var date: Calendar
+    lateinit var date: Calendar
     var medList: ArrayList<String>
     var periodic = NONE
+
+    constructor(date: Calendar, medList: ArrayList<String>) {
+        this.date = date
+        this.medList = medList
+        this.periodic = NONE
+    }
+
+    constructor(date: Long, medList: List<Drug>) {
+        this.date = Calendar.getInstance()
+        this.date.timeInMillis = date
+        this.medList = ArrayList<String>()
+        for(med in medList) {
+            this.medList.add(med.name)
+        }
+    }
 
     constructor(date: Calendar, medList: ArrayList<String>, periodic: Int) {
         this.date = date

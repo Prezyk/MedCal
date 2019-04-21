@@ -10,7 +10,7 @@ import com.prezyk.medcal.model.model.Event
 public interface EventDAO {
 
     @Insert
-    fun insert(event: Event)
+    fun insert(event: Event): Long
 
     @Delete
     fun delete(event: Event)
@@ -20,5 +20,8 @@ public interface EventDAO {
 
     @Query("SELECT * FROM EVENT WHERE (TIME >= :start AND TIME <= :end)")
     fun findAllInRange(start: Long, end: Long): List<Event>
+
+    @Query("DELETE FROM EVENT")
+    fun deleteAll()
 
 }

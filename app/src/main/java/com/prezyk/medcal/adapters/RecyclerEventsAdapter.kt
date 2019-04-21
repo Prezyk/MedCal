@@ -7,9 +7,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.prezyk.medcal.R
-import com.prezyk.medcal.model.Event
+import com.prezyk.medcal.model.EventDTO
 
-class RecyclerEventsAdapter(private val events: ArrayList<Event>) :  RecyclerView.Adapter<RecyclerEventsAdapter.EventHolder>() {
+class RecyclerEventsAdapter(private val eventDTOS: ArrayList<EventDTO>) :  RecyclerView.Adapter<RecyclerEventsAdapter.EventHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerEventsAdapter.EventHolder {
         val row = LayoutInflater.from(parent?.context).inflate(R.layout.display_events_recyclerview_item, parent, false)
@@ -17,14 +17,14 @@ class RecyclerEventsAdapter(private val events: ArrayList<Event>) :  RecyclerVie
     }
 
     override fun getItemCount(): Int {
-        return this.events.size
+        return this.eventDTOS.size
     }
 
     override fun onBindViewHolder(holder: RecyclerEventsAdapter.EventHolder, position: Int) {
-        holder?.textViewHour?.text = events[position].getHourMins()
-        holder?.textViewDrugList?.text = events[position].medList.joinToString("\n")
+        holder?.textViewHour?.text = eventDTOS[position].getHourMins()
+        holder?.textViewDrugList?.text = eventDTOS[position].medList.joinToString("\n")
         holder?.imageViewDelete?.setOnClickListener {
-            events.removeAt(position)
+            eventDTOS.removeAt(position)
             notifyDataSetChanged()
         }
     }

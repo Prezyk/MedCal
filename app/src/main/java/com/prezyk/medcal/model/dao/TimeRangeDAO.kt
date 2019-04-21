@@ -10,7 +10,7 @@ import com.prezyk.medcal.model.model.TimeRange
 public interface TimeRangeDAO {
 
     @Insert
-    fun insert(timeRange: TimeRange)
+    fun insert(timeRange: TimeRange): Long
 
     @Delete
     fun delete(timeRange: TimeRange)
@@ -26,4 +26,10 @@ public interface TimeRangeDAO {
 
     @Query("SELECT * FROM TIME_RANGE WHERE END_DATE = :endDate")
     fun findAllByEndDate(endDate: Long): List<TimeRange>
+
+    @Query("SELECT * FROM TIME_RANGE ORDER BY ID DESC LIMIT 1")
+    fun findMaxID(): TimeRange
+
+    @Query("DELETE FROM TIME_RANGE")
+    fun deleteAll()
 }

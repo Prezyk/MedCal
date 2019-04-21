@@ -2,17 +2,18 @@ package com.prezyk.medcal.views
 
 import android.app.DatePickerDialog
 import android.content.Intent
-import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.prezyk.medcal.adapters.DrugAdapter
 import com.prezyk.medcal.R
 import com.prezyk.medcal.adapters.RecycleDrugAdapter
-import com.prezyk.medcal.adapters.RecyclerEventsAdapter
+import com.prezyk.medcal.model.EventsDatabase
+import com.prezyk.medcal.model.model.Drug
+import com.prezyk.medcal.model.model.Event
 import com.prezyk.medcal.presenters.AddEventPresenter
 import kotlinx.android.synthetic.main.add_event_layout.*
 import java.text.SimpleDateFormat
@@ -20,9 +21,6 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class AddEventActivity : AppCompatActivity(), AddEventPresenter.View {
-    //TODO ograniczenia na daty (data końcowa nie może być mniejsza niż początkowa)
-    //TODO textfield/lista na zaznaczone godziny
-    //TODO odnawianie zaznaczenia po ponownym włączeniu HourPickActivity
     //TODO wpieprzanie wszystkiego do bazy danych - tu będzie jazda
     //TODO kiedy radio na jednorazowe to data końcowa jest nieklikalna
     //TODO w HourPickActivity przycisk nie ma tekstu, a tytuł jest mały i może tego recyclera jakoś do środka wyrównać
@@ -65,6 +63,10 @@ class AddEventActivity : AppCompatActivity(), AddEventPresenter.View {
 
         eventEndDateText.setOnClickListener {
             presenter.onEndDateTextViewClick()
+        }
+
+        accteptBtn.setOnClickListener {
+            presenter.onSubmitButtonClick()
         }
 
 
@@ -121,7 +123,13 @@ class AddEventActivity : AppCompatActivity(), AddEventPresenter.View {
     }
 
     override fun submit() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        this.finish()
+    }
+
+    override fun showSumbissionErrorToast() {
+        var toast = Toast.makeText(this, "Error in form", Toast.LENGTH_LONG)
+        toast.setMargin(20f, 20f)
+        toast.show()
     }
 
     override fun updatePickedHoursTextView(pickedHours: ArrayList<String>) {
@@ -150,5 +158,40 @@ class AddEventActivity : AppCompatActivity(), AddEventPresenter.View {
                 Log.e("NO ERROR", format.format(c.time).toString())
             }
         }
+    }
+
+    override fun onDestroy() {
+        presenter.saveDataToDatabase(this)
+
+        val database = EventsDatabase.getEventsDatabase(this)
+
+        val t = Thread(Runnable {
+            var timeRange = database?.timeRangeDao()?.findMaxID()
+            var eventArray = database?.eventDao()?.findAllByTimeRangeID(7L)
+            var drugs = database?.drugDao()?.findAllByTimeRangeID(7L)
+
+            if(eventArray!!.isEmpty()) {
+                Log.d("EVENT", "ARRAY EMPTY")
+            }
+
+            if(drugs!!.isEmpty()) {
+                Log.d("DRUGS", "DRUG ARRAY EMPTY")
+            }
+
+            Log.d("TIME_RANGE: ", timeRange.toString())
+            for(e: Event in eventArray!!) {
+                Log.d("EVENT: ", e.toString())
+            }
+
+            for(d: Drug in drugs!!) {
+                Log.d("DRUG: ", d.toString())
+            }
+
+        })
+        t.start()
+        t.join()
+
+
+        super.onDestroy()
     }
 }

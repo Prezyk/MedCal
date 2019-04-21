@@ -18,4 +18,29 @@ class  Drug(@NonNull
             @ColumnInfo(name="DRUG_NAME") var name: String,
 
             @NonNull
-            @ColumnInfo(name="TIME_RANGE_ID") var eventID: Long)
+            @ColumnInfo(name="TIME_RANGE_ID") var eventID: Long) {
+
+    override fun toString(): String {
+        return "Drug(name='$name', eventID=$eventID)"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Drug
+
+        if (name != other.name) return false
+        if (eventID != other.eventID) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name.hashCode()
+        result = 31 * result + eventID.hashCode()
+        return result
+    }
+
+
+}

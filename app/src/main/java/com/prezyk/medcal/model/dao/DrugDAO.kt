@@ -18,4 +18,7 @@ public interface DrugDAO {
     @Query("SELECT * FROM DRUG WHERE TIME_RANGE_ID = :id")
     fun findAllByTimeRangeID(id: Long): List<Drug>
 
+    @Query("DELETE FROM DRUG")
+    fun deleteAll()
+
 }

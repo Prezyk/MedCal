@@ -8,10 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.prezyk.medcal.R
 import com.prezyk.medcal.adapters.RecyclerEventsAdapter
 import kotlinx.android.synthetic.main.display_events_layout.*
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
-import com.prezyk.medcal.model.Event
 import com.prezyk.medcal.presenters.DisplayEventsPresenter
 
 class DisplayEventsActivity : AppCompatActivity(), DisplayEventsPresenter.View {
@@ -31,7 +27,7 @@ class DisplayEventsActivity : AppCompatActivity(), DisplayEventsPresenter.View {
         eventsDate.text = presenter.prepareDateString()
 
         viewManager = LinearLayoutManager(this)
-        viewAdapter = RecyclerEventsAdapter(presenter.getEventList())
+        viewAdapter = RecyclerEventsAdapter(presenter.getEventList(this))
 
         recyclerView = findViewById<RecyclerView>(R.id.eventsRecyclerView).apply {
             setHasFixedSize(true)

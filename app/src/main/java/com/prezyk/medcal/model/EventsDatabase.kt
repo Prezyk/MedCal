@@ -33,6 +33,12 @@ abstract class EventsDatabase : RoomDatabase() {
             INSTANCE = null
         }
 
+
     }
 
+//    override fun clearAllTables() {
+//        drugDao().deleteAll()
+//        eventDao().deleteAll()
+//        timeRangeDao().deleteAll()
+//    }
 }
