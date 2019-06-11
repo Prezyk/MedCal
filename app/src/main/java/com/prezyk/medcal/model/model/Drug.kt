@@ -12,8 +12,8 @@ import org.jetbrains.annotations.NotNull
     entity = TimeRange::class,
     parentColumns = ["ID"],
     childColumns = ["TIME_RANGE_ID"],
-    onDelete = ForeignKey.CASCADE,
-    onUpdate = ForeignKey.CASCADE)], primaryKeys = ["DRUG_NAME", "TIME_RANGE_ID"])
+    onDelete = CASCADE,
+    onUpdate = CASCADE)], primaryKeys = ["DRUG_NAME", "TIME_RANGE_ID"])
 class  Drug(@NonNull
             @ColumnInfo(name="DRUG_NAME") var name: String,
 

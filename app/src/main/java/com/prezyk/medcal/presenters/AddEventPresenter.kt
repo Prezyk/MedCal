@@ -105,9 +105,9 @@ class AddEventPresenter(view: View) {
 
         val t = Thread(Runnable {
 
-            database?.eventDao()?.deleteAll()
-            database?.drugDao()?.deleteAll()
-            database?.timeRangeDao()?.deleteAll()
+//            database?.eventDao()?.deleteAll()
+//            database?.drugDao()?.deleteAll()
+//            database?.timeRangeDao()?.deleteAll()
 
 
             this.selectedStartDate.set(Calendar.MILLISECOND, 0)

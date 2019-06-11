@@ -43,7 +43,7 @@ class DisplayEventsPresenter(view: View) {
                 var drugList = database?.drugDao()?.findAllByTimeRangeID(e.eventID)
                 var time = Calendar.getInstance()
                 time.timeInMillis = e.time
-                eventDTOList.add(EventDTO(e.time, drugList!!))
+                eventDTOList.add(EventDTO(e.time, drugList!!, e.eventID))
             }
             eventDTOList.sortedWith(compareBy { it.date.timeInMillis })
         })

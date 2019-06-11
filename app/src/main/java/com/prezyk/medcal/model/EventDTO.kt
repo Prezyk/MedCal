@@ -19,9 +19,8 @@ class EventDTO {
 
             var eventDTOList = arrayOfNulls<EventDTO>(eventList.size)
             for(i in 0 until eventDTOList.size) {
-                var time = Calendar.getInstance()
-                time.timeInMillis = eventList[i].time
-                eventDTOList[i] = EventDTO(time, drugList as ArrayList<String>)
+                var time = eventList[i].time
+                eventDTOList[i] = EventDTO(time, drugList, eventList[i].eventID)
             }
 
             return eventDTOList.asList()
@@ -33,6 +32,7 @@ class EventDTO {
     lateinit var date: Calendar
     var medList: ArrayList<String>
     var periodic = NONE
+    var ID: Long? = null
 
     constructor(date: Calendar, medList: ArrayList<String>) {
         this.date = date
@@ -40,9 +40,10 @@ class EventDTO {
         this.periodic = NONE
     }
 
-    constructor(date: Long, medList: List<Drug>) {
+    constructor(date: Long, medList: List<Drug>, ID: Long) {
         this.date = Calendar.getInstance()
         this.date.timeInMillis = date
+        this.ID = ID
         this.medList = ArrayList<String>()
         for(med in medList) {
             this.medList.add(med.name)

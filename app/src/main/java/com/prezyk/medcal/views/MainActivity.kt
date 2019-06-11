@@ -160,6 +160,7 @@ class MainActivity : AppCompatActivity(), MainPresenter.View {
             while(eventTime.timeInMillis < trE.timeInMillis) {
                 eventTime.set(Calendar.HOUR_OF_DAY, 8)
                 database?.eventDao()?.insert(Event(eventTime.timeInMillis, trID!!))
+                
                 eventTime.set(Calendar.HOUR_OF_DAY, 12)
                 database?.eventDao()?.insert(Event(eventTime.timeInMillis, trID!!))
 
