@@ -20,8 +20,9 @@
         android:id="@+id/separator"
         android:layout_width="fill_parent"
         android:layout_height="1dip"
+        android:layout_below="@+id/eventsDate"
+        android:layout_marginTop="2dp"
         android:layout_toEndOf="@+id/eventsDate"
-        android:layout_below="@id/summonDroneImg"
         android:background="#686868" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -31,11 +32,4 @@
         android:layout_below="@+id/separator"
         />
 
-    <ImageView
-        android:id="@+id/summonDroneImg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="8dp"
-        app:srcCompat="@android:drawable/ic_menu_send" />
 </RelativeLayout>

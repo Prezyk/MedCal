@@ -1,5 +1,8 @@
 package com.prezyk.medcal.views
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -28,9 +31,13 @@ class SummonDroneActivity : AppCompatActivity(), SummonDronePresenter.View {
 
 
         btnSummonDrone.setOnClickListener{
-            presenter.sendHttpRequest(this, spinner_location.selectedItemId.toInt())
-            finish()
+            intent = Intent(this, SendDroneBackActivity::class.java).apply {
+                putExtra("selectedOption", spinner_location.selectedItemPosition)
+            }
+            presenter.updateDatabase(this)
+            startActivity(intent)
         }
+
 
 
 

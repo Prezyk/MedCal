@@ -1,9 +1,14 @@
 package com.prezyk.medcal.views
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.prezyk.medcal.MyBroadcastReceiver
 import com.prezyk.medcal.R
 import com.prezyk.medcal.model.EventsDatabase
 import com.prezyk.medcal.model.model.Drug
@@ -27,6 +32,11 @@ class MainActivity : AppCompatActivity(), MainPresenter.View {
 
         calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->  presenter.updateSelectedDate(GregorianCalendar(year, month, dayOfMonth)) }
 
+
+        summonDroneButton.setOnClickListener {
+            intent = Intent(this, SummonDroneActivity::class.java)
+            startActivity(intent)
+        }
 
         btnDisplayEvents.setOnClickListener {
             presenter.onButtonDisplayEventsClick()
@@ -123,62 +133,81 @@ class MainActivity : AppCompatActivity(), MainPresenter.View {
 //        t.join()
 
 
+//        val database = EventsDatabase.getEventsDatabase(this)
+//        val t = Thread(Runnable {
+//
+////            database?.eventDao()?.deleteAll()
+////            database?.drugDao()?.deleteAll()
+////            database?.timeRangeDao()?.deleteAll()
+//
+//            var trS = Calendar.getInstance()
+//            trS.set(Calendar.MILLISECOND, 0)
+//            trS.set(Calendar.SECOND, 0)
+//            trS.set(Calendar.MINUTE, 0)
+//
+//            var trE = trS.clone() as Calendar
+//            trE.add(Calendar.MONTH, 1)
+//
+//            var timeRange = TimeRange(null, trS.timeInMillis, trE.timeInMillis)
+//
+//            var trID = database?.timeRangeDao()?.insert(timeRange)
+//
+//            var eventTime = trS.clone() as Calendar
+//
+//            var drugList = ArrayList<Drug>()
+//
+//            drugList.add(Drug("Lek1", trID!!))
+//            drugList.add(Drug("Lek2", trID!!))
+//            drugList.add(Drug("Lek3", trID!!))
+//            drugList.add(Drug("Lek4", trID!!))
+//
+//            for(d in drugList) {
+//                database?.drugDao()?.insert(d)
+//            }
+//
+//
+//
+//            while(eventTime.timeInMillis < trE.timeInMillis) {
+//                eventTime.set(Calendar.HOUR_OF_DAY, 8)
+//                database?.eventDao()?.insert(Event(eventTime.timeInMillis, trID!!))
+//
+//                eventTime.set(Calendar.HOUR_OF_DAY, 12)
+//                database?.eventDao()?.insert(Event(eventTime.timeInMillis, trID!!))
+//
+//                eventTime.set(Calendar.HOUR_OF_DAY, 16)
+//                database?.eventDao()?.insert(Event(eventTime.timeInMillis, trID!!))
+//
+//
+//                eventTime.add(Calendar.DAY_OF_MONTH, 1)
+//            }
+//
+//        })
+//
+//        t.start()
+//        t.join()
+
+        this.setAlarm()
+    }
+
+    fun setAlarm() {
+        var am = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        var intent = Intent(this@MainActivity, SummonDroneActivity::class.java)
+         var pi = PendingIntent.getActivity(this@MainActivity, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         val database = EventsDatabase.getEventsDatabase(this)
-        val t = Thread(Runnable {
-
-            database?.eventDao()?.deleteAll()
-            database?.drugDao()?.deleteAll()
-            database?.timeRangeDao()?.deleteAll()
-
-            var trS = Calendar.getInstance()
-            trS.set(Calendar.MILLISECOND, 0)
-            trS.set(Calendar.SECOND, 0)
-            trS.set(Calendar.MINUTE, 0)
-
-            var trE = trS.clone() as Calendar
-            trE.add(Calendar.MONTH, 1)
-
-            var timeRange = TimeRange(null, trS.timeInMillis, trE.timeInMillis)
-
-            var trID = database?.timeRangeDao()?.insert(timeRange)
-
-            var eventTime = trS.clone() as Calendar
-
-            var drugList = ArrayList<Drug>()
-
-            drugList.add(Drug("Lek1", trID!!))
-            drugList.add(Drug("Lek2", trID!!))
-            drugList.add(Drug("Lek3", trID!!))
-            drugList.add(Drug("Lek4", trID!!))
-
-            for(d in drugList) {
-                database?.drugDao()?.insert(d)
-            }
-
-
-
-            while(eventTime.timeInMillis < trE.timeInMillis) {
-                eventTime.set(Calendar.HOUR_OF_DAY, 8)
-                database?.eventDao()?.insert(Event(eventTime.timeInMillis, trID!!))
-                
-                eventTime.set(Calendar.HOUR_OF_DAY, 12)
-                database?.eventDao()?.insert(Event(eventTime.timeInMillis, trID!!))
-
-                eventTime.set(Calendar.HOUR_OF_DAY, 16)
-                database?.eventDao()?.insert(Event(eventTime.timeInMillis, trID!!))
-
-
-                eventTime.add(Calendar.DAY_OF_MONTH, 1)
-            }
-
+        var events: List<Event>? = null
+        var t = Thread(Runnable {
+            events = database?.eventDao()?.findNextEvent()
         })
-
         t.start()
         t.join()
+        if(events != null ) {
+            if(!(events!!.isEmpty())) {
+                am.set(AlarmManager.RTC_WAKEUP, events!![0].time, pi)
+            }
+        }
 
 
     }
-
 
     override fun navigateToAddEvent(date: Calendar) {
         var addEventsActivity =

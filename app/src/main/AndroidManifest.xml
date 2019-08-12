@@ -32,7 +32,9 @@
         <activity android:name="com.prezyk.medcal.views.DisplayEventsActivity"/>
         <activity android:name="com.prezyk.medcal.views.HourPickActivity"/>
         <activity android:name="com.prezyk.medcal.views.SummonDroneActivity"/>
+            <!--android:noHistory="true"/>-->
         <activity android:name="com.prezyk.medcal.views.AddEventActivity"/>
+        <activity android:name="com.prezyk.medcal.views.SendDroneBackActivity"/>
     </application>
 
 </manifest>

@@ -21,6 +21,9 @@ public interface EventDAO {
     @Query("SELECT * FROM EVENT WHERE (TIME >= :start AND TIME <= :end)")
     fun findAllInRange(start: Long, end: Long): List<Event>
 
+    @Query("SELECT *, MIN(TIME) FROM EVENT")
+    fun findNextEvent(): List<Event>
+
     @Query("DELETE FROM EVENT")
     fun deleteAll()
 

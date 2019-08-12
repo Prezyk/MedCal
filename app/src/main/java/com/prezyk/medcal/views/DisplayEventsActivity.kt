@@ -35,10 +35,10 @@ class DisplayEventsActivity : AppCompatActivity(), DisplayEventsPresenter.View {
             adapter = viewAdapter
         }
 
-        summonDroneImg.setOnClickListener {
-            intent = Intent(this, SummonDroneActivity::class.java)
-            startActivity(intent)
-        }
+//        summonDroneImg.setOnClickListener {
+//            intent = Intent(this, SummonDroneActivity::class.java)
+//            startActivity(intent)
+//        }
 
 
     }
